@@ -1,9 +1,7 @@
-import "./App.css";
-
 function App() {
   return (
     <div className="App">
-      <h1>skjdf</h1>
+      <h2 className="text-2xl bg-slate-100">hey there</h2>
     </div>
   );
 }
