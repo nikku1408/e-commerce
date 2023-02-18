@@ -2,6 +2,15 @@ import React, { useState } from "react";
 import { BsEyeFill, BsEyeSlashFill } from "react-icons/bs";
 import { Link } from "react-router-dom";
 import OAuth from "../components/OAuth";
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  updateProfile,
+} from "firebase/auth";
+import { db } from "../fireBase";
+import { doc, serverTimestamp, setDoc } from "firebase/firestore";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 export default function SignUp() {
   const [showPassword, setShowPassword] = useState(false);
@@ -12,12 +21,39 @@ export default function SignUp() {
   });
 
   const { name, email, password } = formData;
+  const navigate = useNavigate();
 
   const onChangeHandler = (e) => {
     setFormData((previousState) => ({
       ...previousState,
       [e.target.id]: e.target.value,
     }));
+  };
+
+  const onSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const auth = getAuth();
+      const userCredentials = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+
+      //to show the user name
+      updateProfile(auth.currentUser, { displayName: name });
+      const user = userCredentials.user;
+      const formDataCopy = { ...formData };
+      delete formDataCopy.password;
+      formDataCopy.timeStamp = serverTimestamp();
+
+      //for saving data to firebase
+      await setDoc(doc(db, "users", user.uid), formDataCopy);
+      // toast.success("Registered Successfully!..");
+      navigate("/");
+    } catch (error) {
+      toast.error("Something Went Wrong!..");
+    }
   };
 
   return (
@@ -33,7 +69,7 @@ export default function SignUp() {
         </div>
 
         <div className="w-full md:w-[67%] lg:w-[40%] lg:ml-20">
-          <form>
+          <form onSubmit={onSubmit}>
             <div>
               <input
                 type="text"
