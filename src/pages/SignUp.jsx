@@ -136,12 +136,13 @@ export default function SignUp() {
                 className="text-fuchsia-600 hover:text-green-600 transition duration-200 
                 ease-in-out ml-1"
               >
-                Forgot Password?{" "}
+                Forgot Password?
               </Link>
             </div>
             <button
               className="w-full bg-blue-600 text-white px-7 py-3 text-sm font-medium uppercase 
-            rounded shadow-md hover:bg-blue-700 transition-duration 150 ease-in-out hover:shadow-lg active:bg-blue-800"
+            rounded shadow-md hover:bg-blue-700 transition-duration 150 ease-in-out hover:shadow-lg
+             active:bg-blue-800"
               type="submit"
             >
               Sign Up
