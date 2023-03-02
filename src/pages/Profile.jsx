@@ -9,6 +9,8 @@ import { useNavigate } from "react-router";
 import { toast } from "react-toastify";
 import { db } from "../fireBase";
 import { doc, updateDoc } from "firebase/firestore";
+import { FcHome } from "react-icons/fc";
+import { Link } from "react-router-dom";
 
 export default function Profile() {
   const auth = getAuth();
@@ -105,6 +107,21 @@ export default function Profile() {
               </p>
             </div>
           </form>
+          <button
+            type="submit"
+            className="bg-blue-700 p-3 rounded text-white w-full font-medium shadow-md
+             hover:bg-blue-800 transition duration-150 ease-in-out hover:shadow-lg
+              active:bg-blue-900 "
+          >
+            {/* justify center is for horizontal centering and item center for vertical centering */}
+            <Link
+              to="/create-listing"
+              className="flex items-center justify-center space-x-3"
+            >
+              <FcHome className="text-2xl bg-red-200 rounded-full" />{" "}
+              <p>Sell or Rent your Home..</p>
+            </Link>
+          </button>
         </div>
       </section>
     </>
